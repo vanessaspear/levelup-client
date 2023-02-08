@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { getEvents } from "../../managers/EventManager"
+import { Navigate, useNavigate } from "react-router-dom"
 
 export const EventList = (props) => {
     const [ events, setEvents ] = useState([])
@@ -8,7 +9,14 @@ export const EventList = (props) => {
         getEvents().then(data => setEvents(data))
     }, [])
 
-    return (
+    const navigate = useNavigate()
+
+    return (<>
+        <button className="btn btn-2 btn-sep icon-create"
+            onClick={() => {
+                navigate({ pathname: "/events/new" })
+            }}
+        >Register New Event</button>
         <article className="events">
             {
                 events.map(event => {
@@ -21,5 +29,5 @@ export const EventList = (props) => {
                 })
             }
         </article>
-    )
+        </>)
 }
