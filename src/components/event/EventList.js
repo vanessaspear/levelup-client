@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
-import { getEvents } from "../../managers/EventManager"
-import { Navigate, useNavigate } from "react-router-dom"
+import { getEvents, deleteEvent } from "../../managers/EventManager"
+import { useNavigate } from "react-router-dom"
 
 export const EventList = (props) => {
     const [ events, setEvents ] = useState([])
@@ -20,12 +20,21 @@ export const EventList = (props) => {
         <article className="events">
             {
                 events.map(event => {
-                    return <section key={`event--${event.id}`} className="event">
-                        <div className="event__title">{event.title} by {event.gamer.full_name}</div>
-                        <div className="event__players">{event.game.num_players} players needed</div>
-                        <div className="event__skillLevel">Skill level is {event.game.skill_level}</div>
-                        <div>(1 = easy, 2 = medium, 3 = hard)</div>
-                    </section>
+                    return <div key={`event--${event.id}`}>
+                        <>
+                            <button
+                                onClick={() => { 
+                                    deleteEvent(event.id) 
+                                    navigate(0)
+                                }}
+                            >Delete Event</button>
+                            <section className="event">
+                                <div className="event__title">{event.title} by {event.gamer.full_name}</div>
+                                <div className="event__players">{event.game.num_players} players needed</div>
+                                <div className="event__skillLevel">Skill level is {event.game.skill_level}</div>
+                            </section>
+                        </> 
+                    </div>
                 })
             }
         </article>
